@@ -13,3 +13,7 @@
 # 구현중
 
 - 링크드리스트
+
+# 참고
+
+- [MSDN: Unit testing best practice](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices)
