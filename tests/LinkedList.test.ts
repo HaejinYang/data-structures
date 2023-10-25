@@ -11,7 +11,19 @@ test("InsertEnd_MultipleItems_ReturnSameOrders", () => {
   expect(actual).toEqual([10, 20, 30]);
 });
 
-test("InsertAfterNode_Item_ReturnNext", () => {
+test("InsertBegin_Item_ReturnNodeAtFirst", () => {
+  const list = new LinkedList<number>();
+  list.insertEnd(10);
+  list.insertEnd(20);
+  list.insertEnd(30);
+
+  list.insertBegin(100);
+  const actual = list.all();
+
+  expect(actual).toEqual([100, 10, 20, 30]);
+});
+
+test("InsertAfterNode_Item_ReturnNextOfNode", () => {
   const list = new LinkedList<number>();
   list.insertEnd(10);
   list.insertEnd(20);
@@ -24,16 +36,17 @@ test("InsertAfterNode_Item_ReturnNext", () => {
   expect(actual).toEqual([10, 20, 50, 30]);
 });
 
-test("InsertBegin_Item_ReturnNodeAtFirst", () => {
+test("InsertAfterNode_Item_ReturnBeforeOfNode", () => {
   const list = new LinkedList<number>();
   list.insertEnd(10);
   list.insertEnd(20);
   list.insertEnd(30);
 
-  list.insertBegin(100);
+  const node = list.find(20);
+  list.insertBeforeNode(node, 50);
   const actual = list.all();
 
-  expect(actual).toEqual([100, 10, 20, 30]);
+  expect(actual).toEqual([10, 50, 20, 30]);
 });
 
 test("Find_ItemNotInList_ReturnNull", () => {

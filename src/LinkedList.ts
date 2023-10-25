@@ -1,6 +1,7 @@
 class LinkedList<T> {
   private head: Node<T>;
   private tail: Node<T>;
+
   constructor() {
     this.head = new Node<T>();
     this.tail = new Node<T>();
@@ -49,6 +50,23 @@ class LinkedList<T> {
     newNode.next = next;
     node.next = newNode;
     next.prev = newNode;
+
+    return newNode;
+  }
+
+  insertBeforeNode(node: Node<T>, item: T): Node<T> {
+    if (!this.find(node.data)) {
+      throw new Error("링크드리스트에 속한 노드가 아님");
+    }
+
+    const prev = node.prev;
+
+    const newNode = new Node<T>();
+    newNode.data = item;
+    newNode.prev = prev;
+    newNode.next = node;
+    prev.next = newNode;
+    node.prev = newNode;
 
     return newNode;
   }
