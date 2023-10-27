@@ -1,6 +1,7 @@
+import { IQueue } from "./IQueue";
 import { Node } from "./LinkedList";
 
-class Queue<T> {
+class Queue<T> implements IQueue<T> {
   private head: Node<T>;
   private tail: Node<T>;
 
