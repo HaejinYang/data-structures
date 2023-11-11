@@ -31,33 +31,38 @@ export class Heap<T> {
 
     this.store.shift();
 
-    let currentIndex = 0;
-    while (true) {
-      let leftChildIndex = 2 * currentIndex + 1;
-      let rightChildIndex = 2 * currentIndex + 2;
+    /**
+     * 왜 2번 도나? push와 pop이 반복되면, 
+     * 최소힙인데 루트가 자식 둘보다 크거나, 
+     * 최대힙인데 루트가 자식 둘보다 작은 상황이 발생할 수 있음.
+     * ex) 0, 10, 100, -10, -100 push후 두 번 pop하면 [100, 10, 0]이 되고 만약 한 번만 루프가 돌면 [10, 100, 0]이 됨.
+     */
+    for (let i = 0; i < 2; i++) {
+      let currentIndex = 0;
+      while (true) {
+        let leftChildIndex = 2 * currentIndex + 1;
+        let rightChildIndex = 2 * currentIndex + 2;
 
-      /**
-       * 좌측 비교, 우측 비교 둘 다 참인 경우는 있을 수 없음. push할때 정렬이 한 번 되었으므로
-       */
-      if (
-        leftChildIndex < this.store.length &&
-        this.swap(leftChildIndex, currentIndex)
-      ) {
-        currentIndex = leftChildIndex;
+        if (
+          leftChildIndex < this.store.length &&
+          this.swap(leftChildIndex, currentIndex)
+        ) {
+          currentIndex = leftChildIndex;
 
-        continue;
+          continue;
+        }
+
+        if (
+          rightChildIndex < this.store.length &&
+          this.swap(rightChildIndex, currentIndex)
+        ) {
+          currentIndex = rightChildIndex;
+
+          continue;
+        }
+
+        break;
       }
-
-      if (
-        rightChildIndex < this.store.length &&
-        this.swap(rightChildIndex, currentIndex)
-      ) {
-        currentIndex = rightChildIndex;
-
-        continue;
-      }
-
-      break;
     }
   }
 
