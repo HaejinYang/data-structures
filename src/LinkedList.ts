@@ -1,6 +1,6 @@
 class LinkedList<T> {
-  private head: Node<T>;
-  private tail: Node<T>;
+  protected head: Node<T>;
+  protected tail: Node<T>;
 
   constructor() {
     this.head = new Node<T>();
