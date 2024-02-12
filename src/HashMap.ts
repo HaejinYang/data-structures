@@ -36,18 +36,14 @@ function Hash(tableSize: number): (key: number) => number {
   };
 }
 
-interface Table<V> {
-  [index: number]: HashNode<number, V>;
-}
-
 export class HashMap<V> {
   private _size: number;
-  private _table: Table<V>;
+  private _table: Array<HashNode<number, V>>;
   private _hash: (key: number) => number;
 
   constructor(tableSize) {
     this._size = tableSize;
-    this._table = {};
+    this._table = [];
     this._hash = Hash(this._size);
   }
 
@@ -58,12 +54,15 @@ export class HashMap<V> {
     if (this._table[hashingKey]) {
       let current = this._table[hashingKey];
       while (current.next) {
-        console.log(current.value);
         current = current.next;
       }
 
       current.next = node;
     } else {
+      // array의 index(A)에 바로 접근하여 삽입하면,
+      // 기존 array의 가장 큰 index와 A사이가 모두 undefined로 채워진다.
+      // 그래서, key가 만약 1억이다? 그러면 1억개의 엘리먼트가 새로 생성되어 undefined로 채워진다고 생각할 수 있겠지만,
+      // hash함수에서 조절해주므로 위와 같은 걱정은 하지 않아도 됨.
       this._table[hashingKey] = node;
     }
   }
